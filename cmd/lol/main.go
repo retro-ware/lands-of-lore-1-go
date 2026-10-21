@@ -18,9 +18,9 @@ import (
 
 	"github.com/memmaker/lands-of-lore-1-go/internal/data"
 	"github.com/memmaker/lands-of-lore-1-go/internal/game"
-	"github.com/memmaker/lands-of-lore-1-go/internal/gameimport"
 	"github.com/memmaker/lands-of-lore-1-go/internal/host"
 	"github.com/memmaker/lands-of-lore-1-go/internal/sound"
+	"github.com/retro-ware/gameimport"
 )
 
 // markerFiles prove a folder holds Lands of Lore.
@@ -46,6 +46,9 @@ func main() {
 	defaultDir := os.Getenv("GOPLAY_DATA")
 	if defaultDir == "" {
 		defaultDir = "game"
+		if _, err := os.Stat("data"); err == nil {
+			defaultDir = "data" // goplay: started in games/lol with no arguments
+		}
 	}
 	dir := flag.String("data", defaultDir, "directory with the original game files")
 	source := flag.String("import", "", "import the game files from this folder/zip/ISO/installer into -data and exit")
