@@ -11,6 +11,7 @@ import (
 	"image"
 	"image/color"
 	"math"
+	"os"
 	"sync/atomic"
 	"time"
 
@@ -130,6 +131,7 @@ func Run(title string, scale int, gameMain func()) error {
 	ebiten.SetWindowSize(ScreenWidth*scale, int(ScreenHeight*crtStretch)*scale)
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 	ebiten.SetTPS(TicksPerSecond)
+	ebiten.SetFullscreen(os.Getenv("GOPLAY_FULLSCREEN") == "1") // goplay starts games fullscreen
 	startGame(gameMain)
 	return ebiten.RunGame(&game{})
 }
